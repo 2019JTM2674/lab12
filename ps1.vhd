@@ -95,7 +95,7 @@ begin
                if a='0' then
                   next_state <= s7;
                else
-                  next_state<=s1;
+                  next_state<=s4;
                end if;
           when s7=>
               if a='0' then
@@ -107,7 +107,7 @@ begin
                if a='0' then
                   next_state<= s2;
                else
-                  next_state<=s1;
+                  next_state<=s4;
                 end if;
            end case;
     end process;
