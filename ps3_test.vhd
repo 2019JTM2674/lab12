@@ -67,10 +67,12 @@ begin
         reset<='0';
         x <= "000111100000000";
         y <= "000000011111111";
+        assert (greaterthan='1') report "Comparison Error detected!" ;
         wait for 100ns;
         
         x <= "000111100000000";
         y <= "100000011111111";
+        assert (lessthan='1') report "Comparison Error detected!" ;
         wait for 100ns;
         
         x<= "101010101010000";
@@ -79,6 +81,7 @@ begin
         
         x <= "000111100000000";
         y <= "000111100000000";
+        assert (equalto='1') report "Comparison Error detected!" ;
         wait for 100ns;
         
         wait;
