@@ -34,6 +34,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity ps3 is
     Port ( x : in STD_LOGIC_VECTOR (14 downto 0);
            y : in STD_LOGIC_VECTOR (14 downto 0);
+           reset: in std_logic;
+           active:in std_logic;
            lessthan : out STD_LOGIC;
            greaterthan : out STD_LOGIC;
            equalto : out STD_LOGIC;
@@ -43,10 +45,20 @@ end ps3;
 architecture Behavioral of ps3 is
 
 begin
-
+    -- Process to find greater, lesser or equalto
     process(x,y)
     begin
+    if(active='1' or reset='1') then
+        greaterthan<='0';
+        lessthan<='0';
+        equalto<='0';
+        inv<='0';
+    end if;
+    if(active='0' and reset='0' ) then
         if(x>y) then
+            if(x = not(y)) then            -- Checking invert condition
+            inv<='1';
+            end if;
             greaterthan<='1';
             lessthan<='0';
             equalto<='0';
@@ -54,14 +66,17 @@ begin
             greaterthan<='0';
             lessthan<='0';
             equalto<='1';
+            inv<='0';
         elsif(x<y) then
             greaterthan<='0';
             lessthan<='1';
             equalto<='0';
+            if(x = not(y)) then
+                inv<='1';
+            end if;
         end if;
-         --if(x = not(y)) then
-               -- inv<='1';
-         --end if;
+         
+     end if;
      end process;
             
 

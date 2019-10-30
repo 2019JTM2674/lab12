@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 30.10.2019 09:24:23
+-- Create Date: 30.10.2019 10:33:58
 -- Design Name: 
--- Module Name: ps1 - Behavioral
+-- Module Name: ps1_1 - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,19 +31,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ps1 is
+entity ps1_1 is
     Port ( a : in STD_LOGIC;
            clk : in STD_LOGIC;
            reset : in STD_LOGIC;
            z : out STD_LOGIC);
-end ps1;
+end ps1_1;
 
-architecture Behavioral of ps1 is
-    type state_type is (s0,s1,s2,s3,s4,s5,s6,s7,s8);
+architecture Behavioral of ps1_1 is
+type state_type is (s0,s1,s2,s3,s4,s5,s6,s7);
     signal next_state, current_state: state_type;
 
 begin
---Process for reset and clock
     process(clk,reset)
     begin
         if(reset = '1') then
@@ -52,88 +51,69 @@ begin
             current_state <= next_state;
          end if;
     end process;
-    --Process for assigning states in Moore model
+    
     process(current_state,a)
     begin
         case current_state is
         when s0=>
+            z<= '0';
             if a= '0' then
                 next_state <= s0;
             else 
                 next_state <= s1;
              end if;
          when s1=>
+             z<= '0';
              if a= '0' then
                 next_state <= s2;
              else 
                  next_state <= s1;
               end if;
           when s2=>
+              z<= '0';
               if a= '0' then
                   next_state <= s0;
               else 
                   next_state <= s3;
                end if; 
           when s3=>
+               z<= '0';
                if a ='0' then
                    next_state <= s2;
                else
                   next_state <=s4;
                 end if;
           when s4=>
+                z<= '0';
                 if a ='0' then
                     next_state <= s5;
                 else
                     next_state <=s1;
                 end if;
           when s5=>
+                 z<= '0';
                  if a ='0' then
                     next_state <= s0;
                  else
                     next_state <=s6;
                  end if;
           when s6=>
+               z<= '0';
                if a='0' then
                   next_state <= s7;
                else
-                  next_state<=s4;
+                  next_state<=s1;
                end if;
           when s7=>
               if a='0' then
-                  next_state<= s0;
-              else
-                  next_state<= s8;
-              end if;
-            when s8 =>
-               if a='0' then
                   next_state<= s2;
-               else
-                  next_state<=s4;
-                end if;
+                  z<='0';
+              else
+                  next_state<= s4;
+                  z<='1';
+              end if;
            end case;
     end process;
-    process(current_state)
-    begin 
-    -- Asigning output in moore model
-    case current_state is
-    when s0=>
-        z<='0';
-    when s1=>
-         z<='0';
-    when s2=>
-          z<='0';
-    when s3=>
-          z<='0';
-    when s4=>
-         z<='0';
-    when s5=>
-         z<='0';
-    when s6=>
-         z<='0';
-    when s7=>
-         z<='0';
-    when s8=>
-          z<='1';
-    end case;
-    end process;
+
+
 end Behavioral;

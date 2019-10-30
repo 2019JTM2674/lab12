@@ -42,15 +42,16 @@ architecture Behavioral of ps2 is
 signal count:std_logic;
 signal k:integer:=1;
 begin
+-- Process for clock and reset
 process(clk,reset)
 begin
 if(clk='1') then
     if(reset='1') then
         count<='0';
     elsif(reset='0') then
-        if(k=5) then
+        if(k=5) then               -- Terminates if count>5
             k<=1;
-            count<=not(count);
+            count<=not(count);    -- Negating clock
         else
             k <= k+1;
         end if;

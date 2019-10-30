@@ -37,7 +37,7 @@ end ps2_test;
 
 architecture Behavioral of ps2_test is
 signal clk,reset: std_logic;
-    signal counter: std_logic;
+    signal clock_out: std_logic;
     
     component ps2
     port(
@@ -48,7 +48,7 @@ signal clk,reset: std_logic;
     
     
 begin
-    uut: ps2 port map(clk,reset,counter);
+    uut: ps2 port map(clk,reset,clock_out);
     
     process
     begin

@@ -41,6 +41,8 @@ architecture Behavioral of ps3_test is
     port(
         x: in std_logic_vector(14 downto 0);
         y: in std_logic_vector(14 downto 0);
+        reset: in std_logic;
+        active:in std_logic;
         lessthan: out std_logic;
         greaterthan : out STD_LOGIC;
         equalto : out STD_LOGIC;
@@ -49,12 +51,20 @@ architecture Behavioral of ps3_test is
     end component;
     
     signal x,y: std_logic_vector(14 downto 0);
+    signal reset,active: std_logic;
     signal lessthan,greaterthan,equalto,inv: std_logic;
 
 begin
-    UUT: ps3 port map (x,y,lessthan,greaterthan,equalto,inv);
+    UUT: ps3 port map (x,y,reset,active,lessthan,greaterthan,equalto,inv);
     process
     begin
+        active <='1';
+        x <= "000111100000000";
+        y <= "000000011111111";
+        wait for 20ns;
+        
+        active<='0';
+        reset<='0';
         x <= "000111100000000";
         y <= "000000011111111";
         wait for 100ns;
@@ -63,13 +73,15 @@ begin
         y <= "100000011111111";
         wait for 100ns;
         
+        x<= "101010101010000";
+        y<="010101010101111";
+        wait for 100ns;
+        
         x <= "000111100000000";
         y <= "000111100000000";
         wait for 100ns;
         
-        --x<= "101010101010000";
-        --y<="010101010101111";
-        wait ;
+        wait;
     end process;
 
 end Behavioral;
